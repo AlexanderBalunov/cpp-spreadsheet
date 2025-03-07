@@ -16,7 +16,7 @@ public:
         return {};
     }
     virtual bool HasCache() const { return false; }
-    virtual void WipeCache() {}
+    virtual void WipeCache() const {}
 };
 
 class Cell::EmptyImpl : public Impl {
@@ -79,13 +79,13 @@ public:
         return cache_.has_value();
     }
 
-    void WipeCache() override {
+    void WipeCache() const override {
         cache_.reset();
     }
 
 private:
     std::unique_ptr<FormulaInterface> formula_;
-    std::optional<FormulaInterface::Value> cache_;
+    mutable std::optional<FormulaInterface::Value> cache_;
     const Sheet& sheet_;
 };
 
